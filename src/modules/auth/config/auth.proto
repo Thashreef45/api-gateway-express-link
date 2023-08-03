@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package authPackage;
+
+service authService {
+    rpc apexLogin(apexLoginReq) returns (apexLoginRes);
+}
+
+message apexLoginReq {
+    string id=1;
+    string password=2;
+}
+
+message apexLoginRes {
+    string message=1;
+}

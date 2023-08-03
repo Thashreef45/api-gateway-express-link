@@ -5,8 +5,8 @@ import compression from 'compression'
 import logger from 'morgan'
 import nocache from 'nocache'
 import env from 'dotenv'
-import apexRoute from './route-handlers/apex-routes'
-import authRoute from './route-handlers/auth-routes'
+import authRoute from './src/modules/auth/interface/routes'
+// import 
 
 
 class Server{
@@ -30,7 +30,7 @@ class Server{
     private initializeRoutes(){
         // this.app.get('/',(req,res)=>res.json({mes:"api gateway"}))
         this.app.use('/',authRoute)
-        this.app.use('/apex',apexRoute)
+        // this.app.use('/apex',apexRoute)
     }
 
     public start(port:string){
