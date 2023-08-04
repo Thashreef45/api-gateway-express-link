@@ -1,16 +1,30 @@
-import { Request,Response } from "express"
+import { Request,Response, json } from "express"
 import client from "../config/grpc-client"
 import {ServiceError} from '@grpc/grpc-js';
 
+
 export default {
     apexLogin : async(req:Request,res:Response)=>{
-        client.apexLogin({
-            "id":req.body.id,
-            "password":req.body.password
-        },(err:ServiceError,response:any)=>{
-            if(!err) { 
-                console.log(response,'response << --gRPC')
-            } 
+        client.apexLogin(req.body,(err:ServiceError,response:any)=>{
+            if (err) {
+                console.error(err);
+                return;
+            }
+            res.status(response.status).json(response)
         })
-    }
+    },
+
+    nodalCreation : async(req:Request,res:Response)=>{
+        client.createNodal(req.body,(err:ServiceError,response:any)=>{
+            if(err){
+                console.log(err)
+                return
+            }
+            res.status(response.status).json(response)
+        })
+    },
+
+    nodalLogin : async(req:Request,res:Response)=>{
+        client.apexLogin({})
+    },
 }

@@ -4,6 +4,7 @@ package authPackage;
 
 service authService {
     rpc apexLogin(apexLoginReq) returns (apexLoginRes);
+    //rpc createNodal(createNodalReq) returns (createNodalRes)
 }
 
 message apexLoginReq {
@@ -13,4 +14,21 @@ message apexLoginReq {
 
 message apexLoginRes {
     string message=1;
+    int32 status=2;
+    string token=3;
+}
+
+message createNodalReq {
+    string id=1;
+    int32 phone=2;
+    string email=3;
+    string password=4;
+    string apex=5;
+    string address=6;
+    int32 pincode=7;
+}
+
+message createNodalRes {
+    string message=1;
+    int32 status=2;
 }

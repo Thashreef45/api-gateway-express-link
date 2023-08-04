@@ -8,8 +8,8 @@ authRoute.post('/apex/login',controller.apexLogin)
 
 
 //nodal routes
-authRoute.post('/nodal/create-nodal')
-authRoute.post('/nodal/login')
+authRoute.post('/nodal/create-nodal',controller.nodalCreation)
+authRoute.post('/nodal/login',controller.nodalLogin)
 
 
 //channel-partners
