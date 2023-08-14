@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+
+package cpPackage;
+
+service cpService {
+    rpc Home(homeReq) returns(homeRes);
+    rpc searchByPin(searchByPinReq) returns(searchByPinRes);
+}
+
+
+
+message homeReq {
+    string id = 1;
+}
+
+message homeRes {
+    string id=1;
+    string name=2;
+    int64 phone=3;
+    string email=4;
+    Address address=5;
+    int32 status=6;
+}
+message Address {
+    int32 pincode=1;
+    string address=2;
+}
+
+
+
+message searchByPinReq {
+    int32 pincode=1;
+}
+
+message searchByPinRes {
+    string id=1;
+    string name=2;
+    int64 phone=3;
+    string email=4;
+    Address address=5;
+    int32 status=6;
+    string message =7;
+}

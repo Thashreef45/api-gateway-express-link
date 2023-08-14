@@ -6,6 +6,7 @@ import logger from 'morgan'
 import nocache from 'nocache'
 import env from 'dotenv'
 import authRoute from './src/modules/auth/interface/routes'
+import cpRoute from './src/modules/cp/interface/routes'
 // import 
 
 
@@ -28,9 +29,8 @@ class Server{
     }
 
     private initializeRoutes(){
-        // this.app.get('/',(req,res)=>res.json({mes:"api gateway"}))
         this.app.use('/',authRoute)
-        // this.app.use('/apex',apexRoute)
+        this.app.use('/cp',cpRoute)
     }
 
     public start(port:string){
