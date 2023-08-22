@@ -2,6 +2,7 @@ import { Request, Response, response } from "express"
 import client from "../../auth/config/grpc-client"
 import { ServiceError } from '@grpc/grpc-js';
 import cpClient from "../config/grpc-cp-client";
+import consignmentClient from "../../consignment/config/grpc-consignment-client";
 
 
 export default {
@@ -14,7 +15,7 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    cpClient.Home({id:response.id},(err:ServiceError,response:any)=>{
+                    cpClient.Home({ id: response.id }, (err: ServiceError, response: any) => {
                         if (err) {
                             console.log(err,)
                             return
@@ -23,7 +24,7 @@ export default {
                         const status = response.status
                         delete response.status
                         res.status(status).json(response)
-                    }) 
+                    })
                 }
             })
         } catch (error) {
@@ -32,7 +33,7 @@ export default {
     },
 
 
-    searchCpByPin : (req : Request , res:Response) =>{
+    searchCpByPin: (req: Request, res: Response) => {
         try {
             client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: any) => {
                 if (err) {
@@ -41,8 +42,8 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    cpClient.searchByPin({pincode:req.body.pincode},(err:ServiceError,response:any)=>{
-                        if(err){
+                    cpClient.searchByPin({ pincode: req.body.pincode }, (err: ServiceError, response: any) => {
+                        if (err) {
                             console.log(err)
                             return
                         }
@@ -54,6 +55,42 @@ export default {
         } catch (error) {
             console.error(error)
         }
+    },
+
+
+
+    buyAwb: (req: Request, res: Response) => {
+        try {
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: any) => {
+                if (err) {
+                    console.log(err)
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    req.body.id = response.id
+                    consignmentClient.buyAwb(req.body,(err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err)
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+
+        }
+    },
+
+
+    newBooking : (req:Request,res:Response) => {
+        try {
+            
+        } catch (error) {
+            
+        }
     }
-    
+
+
 }

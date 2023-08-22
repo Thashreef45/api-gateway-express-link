@@ -9,5 +9,4 @@ const cpPackage:any = grpcObject.cpPackage;
 
 const cpClient = new cpPackage.cpService(process.env.CP_PORT,grpc.credentials.createInsecure())
 
-
 export default cpClient
