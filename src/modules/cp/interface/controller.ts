@@ -69,7 +69,7 @@ export default {
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
                     req.body.id = response.id
-                    consignmentClient.buyAwb(req.body,(err: ServiceError, response: any) => {
+                    consignmentClient.buyAwb(req.body, (err: ServiceError, response: any) => {
                         if (err) {
                             console.log(err)
                             return
@@ -84,13 +84,80 @@ export default {
     },
 
 
-    newBooking : (req:Request,res:Response) => {
+
+    //--inputs awb,cpId
+    validateAwb: (req: Request, res: Response) => {
         try {
-            
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: any) => {
+                if (err) {
+                    console.log(err)
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    cpClient.validateAwb(req.body, (err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err);
+                            return
+                        }
+                        if (response.status != 200) {
+                            res.status(response.status).json(response)
+                        } else {
+                            res.status(response.status).json(response)
+                        }
+                    })
+                }
+
+            })
         } catch (error) {
-            
+            console.log(error);
+
         }
-    }
+    },
+
+
+
+    newBooking: (req: Request, res: Response) => {
+        try {
+
+            //Authentication part
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: any) => {
+                if (err) {
+                    console.log(err)
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    
+                    //awb validation part
+                    cpClient.validateAwb(req.body, (err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err);
+                            return
+                        }
+                        if (response.status != 200) {
+                            res.status(response.status).json(response)
+                        } else {
+                            console.log(req.body,'<<<booking --body')
+                            // Booking Part
+                            consignmentClient.newBooking(req.body, (err: ServiceError, response: any) => {
+                                if (err) {
+                                    console.log(err);
+                                    return
+                                }
+                                console.log(response,'response Booking Part')
+                                res.status(response.status).json(response)
+                            })
+                        }
+                    })
+                }
+
+            })
+        } catch (error) {
+            console.log(error);
+
+        }
+    },
 
 
 }

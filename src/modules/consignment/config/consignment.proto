@@ -5,6 +5,7 @@ package consignmentPackage;
 
 service consignmentService {
     rpc buyAwb (buyAwbReq) returns(buyAwbRes);
+    rpc newBooking (newBookingReq) returns(newBookingRes);
 }
 
 message buyAwbReq {
@@ -14,6 +15,23 @@ message buyAwbReq {
 }
 
 message buyAwbRes {
+    string message=1;
+    int32 status=2;
+}
+
+message newBookingReq {
+    string awb = 1;
+    string image = 2;
+    int64 mobile = 3;
+    string address = 4;
+    int32 pincode = 5;
+    int32 originPin = 6;
+    bool isDoc = 7;
+    string contentType = 8;
+    int32 declaredValue = 9;
+}
+
+message newBookingRes {
     string message=1;
     int32 status=2;
 }

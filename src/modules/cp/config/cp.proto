@@ -7,6 +7,7 @@ service cpService {
     rpc Home(homeReq) returns(homeRes);
     rpc searchByPin(searchByPinReq) returns(searchByPinRes);
     rpc searchById (searchByIdReq) returns(searchByPinRes);
+    rpc validateAwb (validateAwbReq) returns(validateAwbRes);
 }
 
 
@@ -49,4 +50,15 @@ message searchByPinRes {
 
 message searchByIdReq {
     string id=1;
+}
+
+
+message validateAwbReq {
+    string awb = 1;
+    string cpId = 2;
+}
+
+message validateAwbRes {
+    string message = 1;
+    int32 status = 2;
 }
