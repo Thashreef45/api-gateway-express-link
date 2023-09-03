@@ -119,7 +119,6 @@ export default {
 
     newBooking: (req: Request, res: Response) => {
         try {
-
             //Authentication part
             client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: any) => {
                 if (err) {
@@ -128,7 +127,7 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    
+
                     //awb validation part
                     cpClient.validateAwb(req.body, (err: ServiceError, response: any) => {
                         if (err) {
@@ -138,15 +137,26 @@ export default {
                         if (response.status != 200) {
                             res.status(response.status).json(response)
                         } else {
-                            console.log(req.body,'<<<booking --body')
-                            // Booking Part
-                            consignmentClient.newBooking(req.body, (err: ServiceError, response: any) => {
+
+                            //destination pincode validation part
+                            cpClient.searchByPin({ pincode: req.body.pincode }, (err: ServiceError, response: any) => {
                                 if (err) {
-                                    console.log(err);
+                                    console.log(err)
                                     return
                                 }
-                                console.log(response,'response Booking Part')
-                                res.status(response.status).json(response)
+                                if (response.status != 200) {
+                                    res.status(response.status).json(response)
+                                } else {
+
+                                    // Booking Part
+                                    consignmentClient.newBooking(req.body, (err: ServiceError, response: any) => {
+                                        if (err) {
+                                            console.log(err);
+                                            return
+                                        }
+                                        res.status(response.status).json(response)
+                                    })
+                                }
                             })
                         }
                     })
@@ -158,6 +168,7 @@ export default {
 
         }
     },
+    //end---newBooking
 
 
 }

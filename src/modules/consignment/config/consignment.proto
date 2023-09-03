@@ -28,7 +28,8 @@ message newBookingReq {
     int32 originPin = 6;
     bool isDoc = 7;
     string contentType = 8;
-    int32 declaredValue = 9;
+    double declaredValue = 9;
+    string cpId = 10;
 }
 
 message newBookingRes {
