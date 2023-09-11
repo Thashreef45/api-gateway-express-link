@@ -3,27 +3,44 @@ import client from "../../auth/config/grpc-client"
 import { ServiceError } from '@grpc/grpc-js';
 import cpClient from "../config/grpc-cp-client";
 import consignmentClient from "../../consignment/config/grpc-consignment-client";
+import { AuthRes, BookingRes, BuyAwbRes, HomeRes, SearchByPinRes, ValidateAwbRes } from "../types/interfaces";
 
 
 export default {
-    cpHome: (req: Request, res: Response) => {
+
+    cpLogin: (req: Request, res: Response) => {
         try {
-            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: any) => {
+            cpClient.Login(req.body, (err: ServiceError, response: any) => {
                 if (err) {
                     console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                res.status(response.status).json(response)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    cpHome: (req: Request, res: Response) => {
+        try {
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
                     return
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    cpClient.Home({ id: response.id }, (err: ServiceError, response: any) => {
+                    cpClient.Home({ id: req.headers.token }, (err: ServiceError, response: HomeRes) => {
                         if (err) {
-                            console.log(err,)
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
                             return
                         }
                         response.phone = Number(response.phone)
-                        const status = response.status
-                        delete response.status
-                        res.status(status).json(response)
+                        res.status(response.status).json(response)
                     })
                 }
             })
@@ -35,16 +52,18 @@ export default {
 
     searchCpByPin: (req: Request, res: Response) => {
         try {
-            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: any) => {
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
                 if (err) {
                     console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
                     return
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    cpClient.searchByPin({ pincode: req.body.pincode }, (err: ServiceError, response: any) => {
+                    cpClient.searchByPin({ pincode: req.body.pincode }, (err: ServiceError, response: SearchByPinRes) => {
                         if (err) {
                             console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
                             return
                         }
                         response.phone = Number(response.phone)
@@ -61,17 +80,19 @@ export default {
 
     buyAwb: (req: Request, res: Response) => {
         try {
-            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: any) => {
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
                 if (err) {
                     console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
                     return
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    req.body.id = response.id
-                    consignmentClient.buyAwb(req.body, (err: ServiceError, response: any) => {
+                    req.body.id = req.headers.token
+                    consignmentClient.buyAwb(req.body, (err: ServiceError, response: BuyAwbRes) => {
                         if (err) {
                             console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
                             return
                         }
                         res.status(response.status).json(response)
@@ -88,23 +109,21 @@ export default {
     //--inputs awb,cpId
     validateAwb: (req: Request, res: Response) => {
         try {
-            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: any) => {
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
                 if (err) {
                     console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
                     return
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    cpClient.validateAwb(req.body, (err: ServiceError, response: any) => {
+                    cpClient.validateAwb(req.body, (err: ServiceError, response: ValidateAwbRes) => {
                         if (err) {
                             console.log(err);
+                            res.status(500).json({ error: 'An internal server error occurred.' });
                             return
                         }
-                        if (response.status != 200) {
-                            res.status(response.status).json(response)
-                        } else {
-                            res.status(response.status).json(response)
-                        }
+                        res.status(response.status).json(response)
                     })
                 }
 
@@ -120,18 +139,20 @@ export default {
     newBooking: (req: Request, res: Response) => {
         try {
             //Authentication part
-            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: any) => {
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
                 if (err) {
                     console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
                     return
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
 
                     //awb validation part
-                    cpClient.validateAwb(req.body, (err: ServiceError, response: any) => {
+                    cpClient.validateAwb(req.body, (err: ServiceError, response: ValidateAwbRes) => {
                         if (err) {
                             console.log(err);
+                            res.status(500).json({ error: 'An internal server error occurred.' });
                             return
                         }
                         if (response.status != 200) {
@@ -139,9 +160,10 @@ export default {
                         } else {
 
                             //destination pincode validation part
-                            cpClient.searchByPin({ pincode: req.body.pincode }, (err: ServiceError, response: any) => {
+                            cpClient.searchByPin({ pincode: req.body.pincode }, (err: ServiceError, response: SearchByPinRes) => {
                                 if (err) {
                                     console.log(err)
+                                    res.status(500).json({ error: 'An internal server error occurred.' });
                                     return
                                 }
                                 if (response.status != 200) {
@@ -149,9 +171,10 @@ export default {
                                 } else {
 
                                     // Booking Part
-                                    consignmentClient.newBooking(req.body, (err: ServiceError, response: any) => {
+                                    consignmentClient.newBooking(req.body, (err: ServiceError, response: BookingRes) => {
                                         if (err) {
                                             console.log(err);
+                                            res.status(500).json({ error: 'An internal server error occurred.' });
                                             return
                                         }
                                         res.status(response.status).json(response)

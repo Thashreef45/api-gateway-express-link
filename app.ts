@@ -5,9 +5,9 @@ import compression from 'compression'
 import logger from 'morgan'
 import nocache from 'nocache'
 import env from 'dotenv'
-import authRoute from './src/modules/auth/interface/routes'
 import cpRoute from './src/modules/cp/interface/routes'
-// import 
+import nodalRoute from './src/modules/nodal/interface/routes'
+import apexRoute from './src/modules/apex/interface/routes'
 
 
 class Server{
@@ -29,8 +29,9 @@ class Server{
     }
 
     private initializeRoutes(){
-        this.app.use('/',authRoute)
         this.app.use('/cp',cpRoute)
+        this.app.use('/nodal',nodalRoute)
+        this.app.use('/apex',apexRoute)
     }
 
     public start(port:string){

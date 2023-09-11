@@ -3,6 +3,7 @@ import controller from './controller'
 
 const cpRoute:Application = express()
 
+cpRoute.post('/login',controller.cpLogin)
 cpRoute.get('/home',controller.cpHome)
 cpRoute.post('/search-by-pincode',controller.searchCpByPin)
 cpRoute.post('/buy-awb',controller.buyAwb)

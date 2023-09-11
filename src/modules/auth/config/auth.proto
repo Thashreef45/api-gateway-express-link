@@ -3,79 +3,9 @@ syntax = "proto3";
 package authPackage;
 
 service authService {
-    rpc apexLogin(apexLoginReq) returns (apexLoginRes);
-    rpc createNodal(createNodalReq) returns (createNodalRes);
-    rpc nodalLogin(nodalLoginReq) returns (nodalLoginRes);
-    rpc createCP(createCPReq) returns (createCPRes);
-    rpc cpLogin (cpLoginReq) returns (cpLoginRes);
     rpc apexAuth (AuthReq) returns (AuthRes);
     rpc nodalAuth (AuthReq) returns (AuthRes);
     rpc cpAuth (AuthReq) returns (AuthRes);
-}
-
-message apexLoginReq {
-    string id=1;
-    string password=2;
-}
-
-message apexLoginRes {
-    string message=1;
-    int32 status=2;
-    string token=3;
-}
-
-message createNodalReq {
-    string id=1;
-    int64 phone=2;
-    string email=3;
-    string password=4;
-    string apex=5;
-    string address=6;
-    int32 pincode=7;
-    string token=8;
-}
-
-message createNodalRes {
-    string message=1;
-    int32 status=2;
-}
-
-message nodalLoginReq {
-    string id=1;
-    string password=2;
-}
-
-message nodalLoginRes {
-    string message=1;
-    int32 status=2;
-    string token=3;
-}
-
-message createCPReq {
-    string id=1;
-    int64 phone=2;
-    string email=3;
-    string password=4;
-    string nodal=5;
-    string address=6;
-    int32 pincode=7;
-    string token=8;
-}
-
-message createCPRes {
-    string message=1;
-    int32 status=2;
-}
-
-message cpLoginReq {
-    string id=1;
-    string password=2;
-}
-
-message cpLoginRes {
-    string message=1;
-    int32 status=2;
-    string token=3;
 }
 
 

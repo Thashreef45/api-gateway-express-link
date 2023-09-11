@@ -1,3 +1,4 @@
 import Server from "./app";
 
-new Server().start(String(process.env.PORT))
+const port  = String(process.env.PORT)
+new Server().start(port)
