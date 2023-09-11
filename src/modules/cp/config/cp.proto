@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+
+package cpPackage;
+
+service cpService {
+    rpc createCP(createCPReq) returns (createCPRes);
+    rpc Login (loginReq) returns (loginRes);
+    rpc Home(homeReq) returns(homeRes);
+    rpc searchByPin(searchByPinReq) returns(searchByPinRes);
+    rpc searchById (searchByIdReq) returns(searchByPinRes);
+    rpc validateAwb (validateAwbReq) returns(validateAwbRes);
+}
+
+
+message loginReq {
+    string id=1;
+    string password=2;
+}
+
+message loginRes {
+    string message=1;
+    int32 status=2;
+    string token=3;
+}
+
+message createCPReq {
+    string id=1;
+    int64 phone=2;
+    string email=3;
+    string password=4;
+    string nodal=5;
+    string address=6;
+    int32 pincode=7;
+    string token=8;
+    string consignmentPrefix = 9;
+}
+
+message createCPRes {
+    string message=1;
+    int32 status=2;
+}
+
+
+
+message homeReq {
+    string id = 1;
+}
+
+message homeRes {
+    string id=1;
+    string name=2;
+    int64 phone=3;
+    string email=4;
+    Address address=5;
+    int32 status=6;
+    string consignmentPrefix=8;
+}
+message Address {
+    int32 pincode=1;
+    string address=2;
+}
+
+
+
+message searchByPinReq {
+    int32 pincode=1;
+}
+
+message searchByPinRes {
+    string id=1;
+    string name=2;
+    int64 phone=3;
+    string email=4;
+    Address address=5;
+    int32 status=6;
+    string message =7;
+}
+
+
+
+message searchByIdReq {
+    string id=1;
+}
+
+
+message validateAwbReq {
+    string awb = 1;
+    string cpId = 2;
+}
+
+message validateAwbRes {
+    string message = 1;
+    int32 status = 2;
+}

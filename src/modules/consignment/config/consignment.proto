@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+
+package consignmentPackage;
+
+service consignmentService {
+    rpc buyAwb (buyAwbReq) returns(buyAwbRes);
+    rpc newBooking (newBookingReq) returns(newBookingRes);
+}
+
+message buyAwbReq {
+    int32 quantity=1;
+    string awbPrefix=2;
+    string id=3;
+}
+
+message buyAwbRes {
+    string message=1;
+    int32 status=2;
+}
+
+message newBookingReq {
+    string awb = 1;
+    string image = 2;
+    int64 mobile = 3;
+    string address = 4;
+    int32 pincode = 5;
+    int32 originPin = 6;
+    bool isDoc = 7;
+    string contentType = 8;
+    double declaredValue = 9;
+    string cpId = 10;
+}
+
+message newBookingRes {
+    string message=1;
+    int32 status=2;
+}

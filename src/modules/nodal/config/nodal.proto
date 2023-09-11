@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+
+package nodalPackage;
+
+service nodalService {
+    rpc Home (HomeReq) returns (HomeRes);
+    rpc Login(loginReq) returns (loginRes);
+    rpc createNodal(createNodalReq) returns (createNodalRes);
+
+}
+
+message loginReq {
+    string id=1;
+    string password=2;
+}
+
+message loginRes {
+    string message=1;
+    int32 status=2;
+    string token=3;
+}
+
+
+message HomeReq {
+    string id = 1;
+}
+
+message HomeRes {
+    string id = 1; 
+    Address address = 2;
+    string name = 3;
+    int64 phone = 4;
+    string email = 5;
+    string apex = 6;
+    int32 status = 7;
+}
+message Address {
+    int32 pincode = 1;
+    string address = 2; 
+}
+
+
+
+message createNodalReq {
+    string id=1;
+    int64 phone=2;
+    string email=3;
+    string password=4;
+    string apex=5;
+    string address=6;
+    int32 pincode=7;
+    string token=8;
+}
+
+message createNodalRes {
+    string message=1;
+    int32 status=2;
+}
