@@ -1,7 +1,7 @@
 import * as grpc from '@grpc/grpc-js'
 import * as protoLoader from '@grpc/proto-loader'
 import { config } from 'dotenv'
-config()
+config() 
 
 const packageDef = protoLoader.loadSync('src/modules/cp/config/cp.proto')
 const grpcObject = grpc.loadPackageDefinition(packageDef)
