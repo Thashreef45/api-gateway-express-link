@@ -10,6 +10,7 @@ service cpService {
     rpc searchByPin(searchByPinReq) returns(searchByPinRes);
     rpc searchById (searchByIdReq) returns(searchByPinRes);
     rpc validateAwb (validateAwbReq) returns(validateAwbRes);
+    rpc getEmployees(getEmployeesReq) returns (getEmployeesRes);
 }
 
 
@@ -29,11 +30,10 @@ message createCPReq {
     int64 phone=2;
     string email=3;
     string password=4;
-    string nodal=5;
-    string address=6;
-    int32 pincode=7;
-    string token=8;
-    string consignmentPrefix = 9;
+    string address=5;
+    int32 pincode=6;
+    string token=7;
+    string consignmentPrefix = 8;
 }
 
 message createCPRes {
@@ -52,13 +52,10 @@ message homeRes {
     string name=2;
     int64 phone=3;
     string email=4;
-    Address address=5;
+    string address=5;
     int32 status=6;
     string consignmentPrefix=8;
-}
-message Address {
-    int32 pincode=1;
-    string address=2;
+    int32 pincode =9;
 }
 
 
@@ -72,9 +69,10 @@ message searchByPinRes {
     string name=2;
     int64 phone=3;
     string email=4;
-    Address address=5;
+    string address=5;
     int32 status=6;
     string message =7;
+    int32 pincode =8;
 }
 
 
@@ -92,4 +90,19 @@ message validateAwbReq {
 message validateAwbRes {
     string message = 1;
     int32 status = 2;
+}
+
+
+message getEmployeesReq {
+    string token = 1;
+}
+
+message getEmployeesRes {
+    int32 status = 1; 
+    repeated getEmployeesData employees = 2;
+}
+message getEmployeesData {
+    string name = 1;
+    string email =2;
+    int64 phone = 3; 
 }

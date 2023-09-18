@@ -28,17 +28,15 @@ message HomeReq {
 
 message HomeRes {
     string id = 1; 
-    Address address = 2;
+    string address = 2;
     string name = 3;
     int64 phone = 4;
     string email = 5;
     string apex = 6;
     int32 status = 7;
+    int32 pincode = 8;
 }
-message Address {
-    int32 pincode = 1;
-    string address = 2; 
-}
+
 
 
 
@@ -51,6 +49,7 @@ message createNodalReq {
     string address=6;
     int32 pincode=7;
     string token=8;
+    string name = 9;
 }
 
 message createNodalRes {

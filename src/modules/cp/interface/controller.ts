@@ -89,6 +89,7 @@ export default {
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
                     req.body.id = req.headers.token
+                    console.log(req.body, '<<body')
                     consignmentClient.buyAwb(req.body, (err: ServiceError, response: BuyAwbRes) => {
                         if (err) {
                             console.log(err)
@@ -192,6 +193,40 @@ export default {
         }
     },
     //end---newBooking
+
+    getEmployees: (req: Request, res: Response) => {
+        try {
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    cpClient.getEmployees({ token: req.headers.token }, (err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+
+    createEmployee: (req: Request, res: Response) => {
+        try {
+            console.log(req.body, '<<employee')
+        } catch (error) {
+
+        }
+    }
 
 
 }

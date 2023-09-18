@@ -23,6 +23,7 @@ export default {
     },
 
 
+
     nodalCreation: async (req: Request, res: Response) => {
         try {
             req.body.token = req.headers.token
@@ -49,6 +50,7 @@ export default {
             console.log(error)
         }
     },
+
 
     Home: async (req: Request, res: Response) => {
         client.apexAuth(req.headers, (err: ServiceError, response: AuthRes) => {
