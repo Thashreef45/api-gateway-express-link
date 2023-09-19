@@ -11,6 +11,7 @@ service cpService {
     rpc searchById (searchByIdReq) returns(searchByPinRes);
     rpc validateAwb (validateAwbReq) returns(validateAwbRes);
     rpc getEmployees(getEmployeesReq) returns (getEmployeesRes);
+    rpc createEmployee(createEmployeeReq) returns (createEmployeeRes);
 }
 
 
@@ -105,4 +106,17 @@ message getEmployeesData {
     string name = 1;
     string email =2;
     int64 phone = 3; 
+}
+
+
+message createEmployeeReq {
+    string name = 1;
+    string email =2;
+    int64 phone = 3; 
+    string token = 4;
+}
+
+message createEmployeeRes {
+    int32 status = 1; 
+    string message =2;
 }

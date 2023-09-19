@@ -4,6 +4,7 @@ import { ServiceError } from '@grpc/grpc-js';
 import cpClient from "../config/grpc-cp-client";
 import consignmentClient from "../../consignment/config/grpc-consignment-client";
 import { AuthRes, BookingRes, BuyAwbRes, HomeRes, SearchByPinRes, ValidateAwbRes } from "../types/interfaces";
+import { employeePhoneNumberConvert } from "../../../utils/number-convert";
 
 
 export default {
@@ -148,6 +149,8 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
+                    
+                    req.body.token =  req.headers.token
 
                     //awb validation part
                     cpClient.validateAwb(req.body, (err: ServiceError, response: ValidateAwbRes) => {
@@ -210,6 +213,9 @@ export default {
                             res.status(500).json({ error: 'An internal server error occurred.' });
                             return
                         }
+                        if(response.employees){
+                            response.employees = employeePhoneNumberConvert(response.employees)
+                        }
                         res.status(response.status).json(response)
                     })
                 }
@@ -222,7 +228,26 @@ export default {
 
     createEmployee: (req: Request, res: Response) => {
         try {
-            console.log(req.body, '<<employee')
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    req.body.token =  req.headers.token
+                    cpClient.createEmployee(req.body,(err:ServiceError,response:any)=>{
+                        if (err) {
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+
+            })
         } catch (error) {
 
         }

@@ -29,7 +29,7 @@ message newBookingReq {
     bool isDoc = 7;
     string contentType = 8;
     double declaredValue = 9;
-    string cpId = 10;
+    string token = 10;
 }
 
 message newBookingRes {
