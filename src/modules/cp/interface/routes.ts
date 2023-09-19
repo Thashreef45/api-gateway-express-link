@@ -11,7 +11,7 @@ cpRoute.post('/new-booking',controller.newBooking)
 cpRoute.post('/validate-awb',controller.validateAwb)
 cpRoute.post('/new-booking',controller.newBooking)
 cpRoute.get('/get-employees',controller.getEmployees)
-cpRoute.post('create-employee')
+cpRoute.post('/create-employee',controller.createEmployee)
 
 
 
