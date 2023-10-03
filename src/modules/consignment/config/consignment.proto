@@ -3,9 +3,15 @@ syntax = "proto3";
 
 package consignmentPackage;
 
+import "google/protobuf/timestamp.proto";
+
 service consignmentService {
     rpc buyAwb (buyAwbReq) returns(buyAwbRes);
+    rpc getConsignmentTypes (getConsignmentTypesReq) returns (getConsignmentTypesRes);
     rpc newBooking (newBookingReq) returns(newBookingRes);
+    rpc getTodaysBookings (getTodaysBookingsReq) returns (getTodaysBookingsRes);
+    rpc deleteBooking (deleteBookingReq) returns (deleteBookingRes);
+    rpc getBookingHistory(getBookingHistoryReq) returns (getBookingHistoryRes);
 }
 
 message buyAwbReq {
@@ -35,4 +41,70 @@ message newBookingReq {
 message newBookingRes {
     string message=1;
     int32 status=2;
+}
+
+
+
+
+message getConsignmentTypesReq {}
+
+message getConsignmentTypesRes {
+    repeated getConsignmentType types = 1;
+    int32 status = 2;
+}
+message getConsignmentType{
+    string _id = 1;
+    string typeName = 2; 
+}
+
+
+
+message getTodaysBookingsReq {
+    int32 pincode = 1;
+}
+
+message getTodaysBookingsRes {
+    repeated RecentBookings bookings = 1;
+    int32 status = 2;
+    string message = 3;
+}
+message RecentBookings {
+    int32 awb = 1;
+    string awbPrefix = 2;
+    int32 destinationPin = 3;
+    string type = 4;
+    string bookingTime = 5;
+    string _id = 6;
+}
+
+
+message deleteBookingReq {
+    string id = 1; 
+    string token = 2;
+}
+
+message deleteBookingRes {
+    int32 status = 1;
+    string message = 2;
+}
+
+
+message getBookingHistoryReq {
+    int32 pincode = 1;
+    string from = 2;
+    string to = 3;
+}
+
+message getBookingHistoryRes {
+    int32 status = 1;
+    string message = 2;
+    repeated BookingHistoryData data =3;
+}
+message BookingHistoryData {
+    string awbPrefix = 1;
+    int32 awb = 2;
+    int32 destinationPin = 3;
+    string type = 4;
+    string bookingTime = 5;
+    string status = 6;
 }
