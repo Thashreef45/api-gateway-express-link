@@ -12,6 +12,7 @@ service cpService {
     rpc validateAwb (validateAwbReq) returns(validateAwbRes);
     rpc getEmployees(getEmployeesReq) returns (getEmployeesRes);
     rpc createEmployee(createEmployeeReq) returns (createEmployeeRes);
+    rpc fdmToNodal(fdmToNodaReq) returns (fdmToNodaRes);
 }
 
 
@@ -85,7 +86,7 @@ message searchByIdReq {
 
 message validateAwbReq {
     string awb = 1;
-    string cpId = 2;
+    string token = 2;
 }
 
 message validateAwbRes {
@@ -119,4 +120,14 @@ message createEmployeeReq {
 message createEmployeeRes {
     int32 status = 1; 
     string message =2;
+}
+
+
+
+message fdmToNodaReq {
+    string token = 1;
+}
+
+message fdmToNodaRes {
+
 }

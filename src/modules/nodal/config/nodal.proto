@@ -7,7 +7,6 @@ service nodalService {
     rpc Home (HomeReq) returns (HomeRes);
     rpc Login(loginReq) returns (loginRes);
     rpc createNodal(createNodalReq) returns (createNodalRes);
-
 }
 
 message loginReq {
