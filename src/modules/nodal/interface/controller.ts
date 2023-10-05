@@ -81,7 +81,7 @@ export default {
         }
     },
 
-
+    //list of cp with their bookings count
     acceptCpFdm: (req: Request, res: Response) => {
         try {
             client.nodalAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
@@ -93,7 +93,7 @@ export default {
                 if (response.status != 200) {
                     res.status(response.status).json(response)
                 } else {
-                    cpClient.fdmToNodal({token: req.headers.token }, (err: ServiceError, response: any) => {
+                    cpClient.fdmToNodal({ token: req.headers.token }, (err: ServiceError, response: any) => {
                         if (err) {
                             res.status(500).json({ error: 'An internal server error occurred.' });
                             console.log(err)
@@ -105,6 +105,33 @@ export default {
             })
         } catch (error) {
 
+        }
+    },
+
+    assignFdmFromCp: (req: Request, res: Response) => {
+        try {
+            client.nodalAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    console.log(err)
+                    return
+                }
+                if (response.status != 200) {
+                    res.status(response.status).json(response)
+                } else {
+                    const id = req.params.id
+                    cpClient.assignFdmToNodal({ token: req.headers.token,id }, (err: ServiceError, response: any) => {
+                        if (err) {
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            console.log(err)
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+            
         }
     }
 

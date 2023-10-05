@@ -14,7 +14,7 @@ cpRoute.get('/get-employees',controller.getEmployees)
 cpRoute.post('/create-employee',controller.createEmployee)
 cpRoute.post('/create-employee',controller.createEmployee)
 cpRoute.get('/get-consignment-types',controller.getConsignmentTypes)
-cpRoute.get('/get-my-bookings',controller.getMyBookings)
+cpRoute.get('/get-my-bookings/:pincode',controller.getMyBookings)
 cpRoute.delete('/delete-booking/:id',controller.deleteBookedConsignment)
 cpRoute.post('/get-booking-history',controller.getBookingHistory)
 
