@@ -290,7 +290,8 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    consignmentClient.getTodaysBookings({ pincode: 671123 }, (err: ServiceError, response: any) => {
+                    const pincode = req.params.pincode
+                    consignmentClient.getTodaysBookings({ pincode}, (err: ServiceError, response: any) => {
                         if (err) {
                             console.log(err)
                             res.status(500).json({ error: 'An internal server error occurred.' });
@@ -338,6 +339,7 @@ export default {
     },
 
     getBookingHistory: (req: Request, res: Response) => {
+        
         client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
             if (err) {
                 console.log(err)
