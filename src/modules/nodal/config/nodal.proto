@@ -34,6 +34,7 @@ message HomeRes {
     string apex = 6;
     int32 status = 7;
     int32 pincode = 8;
+    string consignmentPrefix = 9;
 }
 
 
@@ -49,6 +50,7 @@ message createNodalReq {
     int32 pincode=7;
     string token=8;
     string name = 9;
+    string consignmentPrefix = 10;
 }
 
 message createNodalRes {

@@ -12,11 +12,12 @@ cpRoute.post('/validate-awb',controller.validateAwb)
 cpRoute.post('/new-booking',controller.newBooking)
 cpRoute.get('/get-employees',controller.getEmployees)
 cpRoute.post('/create-employee',controller.createEmployee)
-cpRoute.post('/create-employee',controller.createEmployee)
 cpRoute.get('/get-consignment-types',controller.getConsignmentTypes)
 cpRoute.get('/get-my-bookings/:pincode',controller.getMyBookings)
 cpRoute.delete('/delete-booking/:id',controller.deleteBookedConsignment)
 cpRoute.post('/get-booking-history',controller.getBookingHistory)
+cpRoute.get('/tracking/:awb',controller.consignmentTracking)
+
 
 
 export default cpRoute

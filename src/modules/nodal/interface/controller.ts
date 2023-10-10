@@ -119,8 +119,9 @@ export default {
                 if (response.status != 200) {
                     res.status(response.status).json(response)
                 } else {
-                    const id = req.params.id
-                    cpClient.assignFdmToNodal({ token: req.headers.token,id }, (err: ServiceError, response: any) => {
+                    req.body.token =req.headers.token
+                    req.body.id = req.params.id
+                    cpClient.assignFdmToNodal(req.body, (err: ServiceError, response: any) => {
                         if (err) {
                             res.status(500).json({ error: 'An internal server error occurred.' });
                             console.log(err)
