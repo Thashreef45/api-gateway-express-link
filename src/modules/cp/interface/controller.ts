@@ -291,7 +291,7 @@ export default {
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
                     const pincode = req.params.pincode
-                    consignmentClient.getTodaysBookings({ pincode}, (err: ServiceError, response: any) => {
+                    consignmentClient.getTodaysBookings({ pincode }, (err: ServiceError, response: any) => {
                         if (err) {
                             console.log(err)
                             res.status(500).json({ error: 'An internal server error occurred.' });
@@ -339,25 +339,53 @@ export default {
     },
 
     getBookingHistory: (req: Request, res: Response) => {
-        
-        client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
-            if (err) {
-                console.log(err)
-                res.status(500).json({ error: 'An internal server error occurred.' });
-                return
-            }
-            if (response.status != 200) res.status(response.status).json(response)
-            else {
-                consignmentClient.getBookingHistory(req.body,(err:ServiceError,response:any)=>{
-                    if (err) {
-                        console.log(err)
-                        res.status(500).json({ error: 'An internal server error occurred.' });
-                        return
-                    }
-                    res.status(response.status).json(response)
-                })
-            }
-        })
+        try {
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    consignmentClient.getBookingHistory(req.body, (err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+
+        }
+    },
+
+    consignmentTracking: (req: Request, res: Response) => {
+        try {
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    consignmentClient.tracking(req.params, (err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+
+        }
     }
 
 
