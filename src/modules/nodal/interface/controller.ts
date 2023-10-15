@@ -4,6 +4,7 @@ import client from '../../auth/config/grpc-client'
 import { AuthRes, CreateCpRes, HomeRes, LoginRes } from '../types/interfaces'
 import cpClient from '../../cp/config/grpc-cp-client'
 import { ServiceError } from '@grpc/grpc-js'
+import consignmentClient from '../../consignment/config/grpc-consignment-client'
 
 export default {
 
@@ -119,7 +120,7 @@ export default {
                 if (response.status != 200) {
                     res.status(response.status).json(response)
                 } else {
-                    req.body.token =req.headers.token
+                    req.body.token = req.headers.token
                     req.body.id = req.params.id
                     cpClient.assignFdmToNodal(req.body, (err: ServiceError, response: any) => {
                         if (err) {
@@ -132,10 +133,63 @@ export default {
                 }
             })
         } catch (error) {
-            
+
+        }
+    },
+
+
+    getSendingFdms: (req: Request, res: Response) => {
+        try {
+            client.nodalAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    console.log(err)
+                    return
+                }
+                if (response.status != 200) {
+                    res.status(response.status).json(response)
+                } else {
+                    consignmentClient.getNodalSendingFdms(req.headers, (err: ServiceError, response: any) => {
+                        if (err) {
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            console.log(err)
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+
+        }
+    },
+
+    transferSendingFDM: (req: Request, res: Response) => {
+        try {
+            client.nodalAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    console.log(err)
+                    return
+                }
+                if (response.status != 200) {
+                    res.status(response.status).json(response)
+                } else {
+                    req.body.token = req.headers.token
+                    consignmentClient.transferNodalSendingFdm(req.body, (err: ServiceError, response: any) => {
+                        if (err) {
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            console.log(err)
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+
         }
     }
-
 
 
 }
