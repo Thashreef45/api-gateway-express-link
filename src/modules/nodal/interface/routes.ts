@@ -8,6 +8,10 @@ nodalRoute.get('/home',controller.home)
 nodalRoute.post('/create-cp',controller.createChannelPartner)
 nodalRoute.get('/accept-fdm',controller.acceptCpFdm)
 nodalRoute.post('/accept-fdm-cp/:id',controller.assignFdmFromCp)
+nodalRoute.get('/get-sending-fdms',controller.getSendingFdms)
+nodalRoute.post('/transfer-sending-fdm',controller.transferSendingFDM)
+
+
 
 
 

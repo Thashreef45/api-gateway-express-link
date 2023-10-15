@@ -19,5 +19,4 @@ cpRoute.post('/get-booking-history',controller.getBookingHistory)
 cpRoute.get('/tracking/:awb',controller.consignmentTracking)
 
 
-
 export default cpRoute
