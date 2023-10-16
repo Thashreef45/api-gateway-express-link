@@ -15,6 +15,7 @@ service consignmentService {
     rpc tracking (trackingReq) returns (trackingRes);
     rpc getNodalSendingFdms (getNodalSendingFdmsReq) returns (getNodalSendingFdmsRes);
     rpc transferNodalSendingFdm (transferNodalSendingFdmReq) returns (transferNodalSendingFdmRes);
+    rpc getCpRecievedFdms (getCpRecievedFdmsReq) returns (getCpRecievedFdmsRes);
 }
 
 message buyAwbReq {
@@ -205,4 +206,24 @@ message transferNodalSendingFdmRes {
 }
 
 
+
+message getCpRecievedFdmsReq{
+    string token = 1;
+}
+
+message getCpRecievedFdmsRes {
+    int32 status = 1;
+    string message = 2;
+    repeated getCpRecievedFdmsResDatas data = 3;
+}
+
+
+message getCpRecievedFdmsResDatas{
+    string awbPrefix = 1;
+    int32 awb = 2;
+    string mobile = 3;
+    string address = 4;
+    string type = 5;
+    string _id = 6;
+}
 

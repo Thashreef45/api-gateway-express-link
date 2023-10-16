@@ -17,6 +17,8 @@ cpRoute.get('/get-my-bookings/:pincode',controller.getMyBookings)
 cpRoute.delete('/delete-booking/:id',controller.deleteBookedConsignment)
 cpRoute.post('/get-booking-history',controller.getBookingHistory)
 cpRoute.get('/tracking/:awb',controller.consignmentTracking)
+cpRoute.get('/get-recieved-fdm',controller.getRecievedFdm)
+
 
 
 export default cpRoute
