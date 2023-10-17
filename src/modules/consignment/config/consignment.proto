@@ -16,6 +16,7 @@ service consignmentService {
     rpc getNodalSendingFdms (getNodalSendingFdmsReq) returns (getNodalSendingFdmsRes);
     rpc transferNodalSendingFdm (transferNodalSendingFdmReq) returns (transferNodalSendingFdmRes);
     rpc getCpRecievedFdms (getCpRecievedFdmsReq) returns (getCpRecievedFdmsRes);
+    rpc getApexSendingFdms (getApexSendingFdmsReq) returns (getApexSendingFdmsRes);
 }
 
 message buyAwbReq {
@@ -144,21 +145,21 @@ message trackingResData {
     string bookingTime = 10;
     int32 mobile = 11;
     trackSendingPart sending = 12;
-    trackReceivingPart recieving = 13;
+    trackRecievingPart recieving = 13;
     string status = 14;
 }
 
 message trackSendingPart {
     typeOffice nodalRecieved = 1;
     string nodalSend = 2;
-    typeOffice apexReceived = 3;
+    typeOffice apexRecieved = 3;
     string apexSend = 4;
 }
 
-message trackReceivingPart {
-    typeOffice apexReceived = 1;
+message trackRecievingPart {
+    typeOffice apexRecieved = 1;
     string apexSend = 2;
-    typeOffice nodalReceived = 3;
+    typeOffice nodalRecieved = 3;
     string nodalSend = 4;
     typeOffice cpRecieved = 5;
     string cpUpdate=6;
@@ -225,5 +226,27 @@ message getCpRecievedFdmsResDatas{
     string address = 4;
     string type = 5;
     string _id = 6;
+}
+
+
+message getApexSendingFdmsReq {
+    string token = 1;
+}
+
+message getApexSendingFdmsRes {
+    string message = 1;
+    int32 status = 2;
+    repeated getApexSendingFdmsResData data = 3;
+}
+
+message getApexSendingFdmsResData {
+    int32 awb = 1;
+    string awbPrefix = 2;
+    int32 destinationPin = 3;
+    string type = 4;
+    string bookingTime = 5;
+    string _id = 6;
+    int32 originPin = 7;
+    string status = 8;
 }
 

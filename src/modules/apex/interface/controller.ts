@@ -4,6 +4,7 @@ import nodalClient from "../../nodal/config/grpc-nodal-client"
 import client from "../../auth/config/grpc-client"
 import apexClient from "../config/grpc-apex-client"
 import { AuthRes, LoginRes, createNodalRes } from "../types/interfaces"
+import consignmentClient from "../../consignment/config/grpc-consignment-client"
 
 export default {
 
@@ -70,6 +71,28 @@ export default {
                     }
                     if(response.status == 200) {
                         response.phone = Number(response.phone)
+                    }
+                    res.status(response.status).json(response)
+                })
+            }
+        })
+    },
+
+    getSendingFdms : async(req:Request,res:Response) => {
+        client.apexAuth(req.headers, (err: ServiceError, response: AuthRes) => {
+            if (err) {
+                console.log(err)
+                res.status(500).json({ error: 'An internal server error occurred.' });
+                return
+            }
+            if (response.status != 200) {
+                res.status(response.status).json(response)
+            } else {
+                consignmentClient.getApexSendingFdms({token:req.headers.token}, (err: ServiceError, response: any) => {
+                    if (err) {
+                        console.log(err)
+                        res.status(500).json({ error: 'An internal server error occurred.' });
+                        return
                     }
                     res.status(response.status).json(response)
                 })
