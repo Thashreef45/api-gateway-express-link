@@ -17,6 +17,7 @@ service consignmentService {
     rpc transferNodalSendingFdm (transferNodalSendingFdmReq) returns (transferNodalSendingFdmRes);
     rpc getCpRecievedFdms (getCpRecievedFdmsReq) returns (getCpRecievedFdmsRes);
     rpc getApexSendingFdms (getApexSendingFdmsReq) returns (getApexSendingFdmsRes);
+    rpc transferApexSendingFdm (transferApexSendingFdmReq) returns (transferApexSendingFdmRes);
 }
 
 message buyAwbReq {
@@ -248,5 +249,15 @@ message getApexSendingFdmsResData {
     string _id = 6;
     int32 originPin = 7;
     string status = 8;
+}
+
+message transferApexSendingFdmReq {
+    string token = 1;
+    string id = 2;
+}
+
+message transferApexSendingFdmRes {
+    int32 status = 1;
+    string message = 2;
 }
 
