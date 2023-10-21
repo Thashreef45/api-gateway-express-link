@@ -189,6 +189,59 @@ export default {
         } catch (error) {
 
         }
+    },
+
+    getRecievedFdms : async(req:Request,res:Response) => {
+        try {
+            client.nodalAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    console.log(err)
+                    return
+                }
+                if (response.status != 200) {
+                    res.status(response.status).json(response)
+                } else {
+                    consignmentClient.getNodalRecievedFdms({ token: req.headers.token }, (err: ServiceError, response: any) => {
+                        if (err) {
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            console.log(err)
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+            
+        }
+    },
+
+    transferRecievedFdm : async(req:Request,res:Response) => {
+        try {
+            client.nodalAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    console.log(err)
+                    return
+                }
+                if (response.status != 200) {
+                    res.status(response.status).json(response)
+                } else {
+                    req.body.token = req.headers.token
+                    consignmentClient.transferNodalRecievedFdm(req.body, (err: ServiceError, response: any) => {
+                        if (err) {
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            console.log(err)
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+            
+        }
     }
 
 
