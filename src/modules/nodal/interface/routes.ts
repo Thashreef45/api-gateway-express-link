@@ -10,6 +10,9 @@ nodalRoute.get('/accept-fdm',controller.acceptCpFdm)
 nodalRoute.post('/accept-fdm-cp/:id',controller.assignFdmFromCp)
 nodalRoute.get('/get-sending-fdms',controller.getSendingFdms)
 nodalRoute.post('/transfer-sending-fdm',controller.transferSendingFDM)
+nodalRoute.get('/get-recieved-fdms',controller.getRecievedFdms)
+nodalRoute.post('/transfer-recieved-fdm',controller.transferRecievedFdm)
+
 
 
 
