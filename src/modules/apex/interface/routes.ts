@@ -8,7 +8,7 @@ apexRoute.post('/create-nodal',controller.nodalCreation)
 apexRoute.get('/home',controller.Home)
 apexRoute.get('/get-sending-fdms',controller.getSendingFdms)
 apexRoute.post('/transfer-sending-fdm',controller.transferSendingFdm)
-
+apexRoute.get('/recieved-fdms',controller.getApexRecievedfdms)
 
 
 

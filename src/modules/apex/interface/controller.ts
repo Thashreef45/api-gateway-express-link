@@ -125,6 +125,34 @@ export default {
         } catch (error) {
             
         }
+    },
+
+
+    getApexRecievedfdms : (req:Request,res:Response) => {
+        try {
+            client.apexAuth(req.headers, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                if (response.status != 200) {
+                    res.status(response.status).json(response)
+                } else {
+                    req.body.token = req.headers.token
+                    consignmentClient.getApexRecievedfdms(req.body, (err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+            
+        }
     }
 
 }
