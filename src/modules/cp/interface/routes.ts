@@ -18,7 +18,7 @@ cpRoute.delete('/delete-booking/:id',controller.deleteBookedConsignment)
 cpRoute.post('/get-booking-history',controller.getBookingHistory)
 cpRoute.get('/tracking/:awb',controller.consignmentTracking)
 cpRoute.get('/get-recieved-fdm',controller.getRecievedFdm)
-
+cpRoute.post('/assign-fdm',controller.assignFdmToEmployee)
 
 
 export default cpRoute
