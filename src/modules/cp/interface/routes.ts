@@ -19,6 +19,11 @@ cpRoute.post('/get-booking-history',controller.getBookingHistory)
 cpRoute.get('/tracking/:awb',controller.consignmentTracking)
 cpRoute.get('/get-recieved-fdm',controller.getRecievedFdm)
 cpRoute.post('/assign-fdm',controller.assignFdmToEmployee)
+cpRoute.get('/assigned-fdms/:id',controller.getEmployeeAssignedFdms)
+cpRoute.get('/delivery-status',controller.getDeliveryStatus)
+cpRoute.post('/update-delivery-status',controller.updateDeliveryStatus)
+
+
 
 
 export default cpRoute
