@@ -23,6 +23,9 @@ service consignmentService {
     rpc getApexRecievedfdms (getApexRecievedfdmsReq) returns (getApexRecievedfdmsRes);
     rpc transferApexRecievedFdms (transferApexRecievedFdmsReq) returns (transferApexRecievedFdmsRes);
     rpc assignFdm (assignFdmReq) returns (assignFdmRes);
+    rpc getAssignedFdms (getAssignedFdmsReq) returns (getAssignedFdmsRes);
+    rpc getDeliveryStatus (getDeliveryStatusReq) returns (getDeliveryStatusRes);
+    rpc updateDeliveryStatus (updateDeliveryStatusReq) returns (updateDeliveryStatusRes);
 }
 
 message buyAwbReq {
@@ -358,5 +361,55 @@ message assignFdmReq {
 message assignFdmRes {
     string message = 1;
     int32 status = 2;
+}
+
+
+
+message getAssignedFdmsReq {
+    string id = 1;
+}
+
+message getAssignedFdmsRes {
+    string message = 1;
+    int32 status = 2;
+    repeated getAssignedFdmsResData data = 3;
+}
+
+message getAssignedFdmsResData {
+    string _id = 1;
+    string awbPrefix = 2;
+    int32 awb = 3;
+    string mobile = 4;
+    string address = 5;
+    string status = 6;
+    string type = 7;
+    bool isReturned = 8;
+}
+
+
+
+message getDeliveryStatusReq {}
+message getDeliveryStatusRes {
+    int32 status = 1;
+    string message = 2;
+    repeated getDeliveryStatusResData data = 3;
+}
+
+message getDeliveryStatusResData {
+    string _id = 1;
+    string statusName = 2;
+}
+
+
+
+
+message updateDeliveryStatusReq {
+    string id = 1;
+    string statusId = 2;
+}
+
+message updateDeliveryStatusRes {
+    int32 status = 1;
+    string message = 2;
 }
 

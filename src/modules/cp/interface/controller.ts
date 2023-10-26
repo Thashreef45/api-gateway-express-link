@@ -439,5 +439,80 @@ export default {
         }
     },
 
+    getEmployeeAssignedFdms : (req:Request,res:Response) => {
+        try {
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    consignmentClient.getAssignedFdms({id:req.params.id}, (err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+            
+        }
+    },
+
+    getDeliveryStatus : (req:Request,res:Response) => {
+        try {
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    consignmentClient.getDeliveryStatus({}, (err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+            
+        }
+    },
+
+    updateDeliveryStatus : (req:Request,res:Response) => {
+        try {
+            client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    consignmentClient.updateDeliveryStatus(req.body, (err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+            
+        }
+    },
+
 
 }
