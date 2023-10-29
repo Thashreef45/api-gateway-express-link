@@ -29,11 +29,22 @@ interface CreateCpRes {
     status : number;
 }
 
+interface SearchByPinRes {
+    id: string;
+    name: string;
+    phone: number;
+    email: string;
+    address: Address
+    status: number;
+    message: string;
+}
+
 
 
 export {
     AuthRes,
     LoginRes,
     HomeRes,
-    CreateCpRes
+    CreateCpRes,
+    SearchByPinRes
 }

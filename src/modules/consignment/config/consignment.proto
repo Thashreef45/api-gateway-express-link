@@ -130,7 +130,6 @@ message BookingHistoryData {
 
 
 
-
 message trackingReq {
     string awb = 1;
 }
@@ -156,6 +155,9 @@ message trackingResData {
     trackSendingPart sending = 12;
     trackRecievingPart recieving = 13;
     string status = 14;
+    string drs = 15;
+    bool isReturned = 16;
+    trackReturn notDelivered = 17;
 }
 
 message trackSendingPart {
@@ -174,11 +176,17 @@ message trackRecievingPart {
     string cpUpdate=6;
 }
 
+message trackReturn {
+    trackSendingPart sending = 1;
+    trackRecievingPart recieving = 2;
+}
+
 message typeOffice {
     string Date = 1;
     string address = 2;
     string name = 3;
 }
+
 
 
 
@@ -406,10 +414,13 @@ message getDeliveryStatusResData {
 message updateDeliveryStatusReq {
     string id = 1;
     string statusId = 2;
+    string image = 3;
 }
 
 message updateDeliveryStatusRes {
     int32 status = 1;
     string message = 2;
 }
+
+
 
