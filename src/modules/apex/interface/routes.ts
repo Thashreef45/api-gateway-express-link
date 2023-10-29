@@ -10,6 +10,10 @@ apexRoute.get('/get-sending-fdms',controller.getSendingFdms)
 apexRoute.post('/transfer-sending-fdm',controller.transferSendingFdm)
 apexRoute.get('/recieved-fdms',controller.getApexRecievedfdms)
 apexRoute.post('/transfer-recieved-fdms',controller.transferRecievedFdm)
+apexRoute.post('/search-by-pincode',controller.searchCpByPin)
+apexRoute.get('/tracking/:awb',controller.consignmentTracking)
+
+
 
 
 

@@ -53,6 +53,18 @@ interface TransferApexSendingFdmRes {
 }
 
 
+interface SearchByPinRes {
+    id: string;
+    name: string;
+    phone: number;
+    email: string;
+    address: string;
+    pincode:number
+    status: number;
+    message: string;
+}
+
+
 export {
     LoginRes,
     AuthRes,
@@ -60,5 +72,6 @@ export {
     Home,
     Fdms,
     TransferApexSendingFdmRes,
+    SearchByPinRes
 }
 

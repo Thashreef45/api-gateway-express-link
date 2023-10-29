@@ -14,6 +14,7 @@ service cpService {
     rpc createEmployee(createEmployeeReq) returns (createEmployeeRes);
     rpc fdmToNodal(fdmToNodaReq) returns (fdmToNodaRes);
     rpc assignFdmToNodal(assignFdmToNodalReq) returns(assignFdmToNodalRes);
+    rpc getAnEmployee (getAnEmployeeReq) returns (getAnEmployeeRes);
 }
 
 
@@ -155,4 +156,19 @@ message assignFdmToNodalReq {
 message assignFdmToNodalRes {
     int32 status = 1;
     string message = 2;
+}
+
+
+
+message getAnEmployeeReq {
+    string id = 1;
+}
+
+message getAnEmployeeRes {
+    string name = 1;
+    string email = 2;
+    string phone = 3;
+    int32 status = 4;
+    string message = 5; 
+    string token = 6;
 }

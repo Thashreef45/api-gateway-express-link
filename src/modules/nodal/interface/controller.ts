@@ -1,7 +1,7 @@
 import { Request, Response, response } from 'express'
 import nodalClient from '../config/grpc-nodal-client'
 import client from '../../auth/config/grpc-client'
-import { AuthRes, CreateCpRes, HomeRes, LoginRes } from '../types/interfaces'
+import { AuthRes, CreateCpRes, HomeRes, LoginRes, SearchByPinRes } from '../types/interfaces'
 import cpClient from '../../cp/config/grpc-cp-client'
 import { ServiceError } from '@grpc/grpc-js'
 import consignmentClient from '../../consignment/config/grpc-consignment-client'
@@ -191,7 +191,7 @@ export default {
         }
     },
 
-    getRecievedFdms : async(req:Request,res:Response) => {
+    getRecievedFdms: async (req: Request, res: Response) => {
         try {
             client.nodalAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
                 if (err) {
@@ -213,11 +213,11 @@ export default {
                 }
             })
         } catch (error) {
-            
+
         }
     },
 
-    transferRecievedFdm : async(req:Request,res:Response) => {
+    transferRecievedFdm: async (req: Request, res: Response) => {
         try {
             client.nodalAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
                 if (err) {
@@ -240,9 +240,62 @@ export default {
                 }
             })
         } catch (error) {
-            
+
         }
-    }
+    },
+
+
+    searchCpByPin: (req: Request, res: Response) => {
+        try {
+            client.nodalAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    cpClient.searchByPin({ pincode: req.body.pincode }, (err: ServiceError, response: SearchByPinRes) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            return
+                        }
+                        response.phone = Number(response.phone)
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    },
+
+    consignmentTracking: (req: Request, res: Response) => {
+        try {
+            client.nodalAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    consignmentClient.tracking(req.params, (err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            return
+                        }
+                        console.log(response,'ressp')
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+
+        }
+    },
 
 
 }

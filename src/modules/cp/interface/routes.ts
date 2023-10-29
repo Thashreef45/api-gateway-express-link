@@ -22,6 +22,8 @@ cpRoute.post('/assign-fdm',controller.assignFdmToEmployee)
 cpRoute.get('/assigned-fdms/:id',controller.getEmployeeAssignedFdms)
 cpRoute.get('/delivery-status',controller.getDeliveryStatus)
 cpRoute.post('/update-delivery-status',controller.updateDeliveryStatus)
+cpRoute.get('/employee/:id',controller.getEmployeeDetail)
+
 
 
 
