@@ -26,6 +26,8 @@ service consignmentService {
     rpc getAssignedFdms (getAssignedFdmsReq) returns (getAssignedFdmsRes);
     rpc getDeliveryStatus (getDeliveryStatusReq) returns (getDeliveryStatusRes);
     rpc updateDeliveryStatus (updateDeliveryStatusReq) returns (updateDeliveryStatusRes);
+    rpc getReturnNodalSendingFdms (getNodalRecievedFdmsReq) returns (getNodalRecievedFdmsRes);
+    rpc transferReturnNodalSendingFdms (transferNodalSendingFdmReq) returns (transferNodalSendingFdmRes);
 }
 
 message buyAwbReq {

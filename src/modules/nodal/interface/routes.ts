@@ -14,7 +14,8 @@ nodalRoute.get('/get-recieved-fdms',controller.getRecievedFdms)
 nodalRoute.post('/transfer-recieved-fdm',controller.transferRecievedFdm)
 nodalRoute.post('/search-by-pincode',controller.searchCpByPin)
 nodalRoute.get('/tracking/:awb',controller.consignmentTracking)
-
+nodalRoute.get('/return-sending-fdms',controller.getReturnSendingFdms)
+nodalRoute.post('/return-sending-fdm',controller.transferReturnSendingFdms)
 
 
 
