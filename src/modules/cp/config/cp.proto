@@ -162,13 +162,17 @@ message assignFdmToNodalRes {
 
 message getAnEmployeeReq {
     string id = 1;
+    string token = 2;
 }
 
 message getAnEmployeeRes {
+    int32 status = 1;
+    getAnEmployeeResData data = 2;
+}
+
+message getAnEmployeeResData {
     string name = 1;
     string email = 2;
     string phone = 3;
-    int32 status = 4;
-    string message = 5; 
-    string token = 6;
+    string message = 4; 
 }
