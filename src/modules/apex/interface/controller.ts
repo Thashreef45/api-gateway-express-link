@@ -210,7 +210,8 @@ export default {
         }
     },
 
-    consignmentTracking: (req: Request, res: Response) => {
+
+    consignmentTracking : (req: Request, res: Response) => {
         try {
             client.apexAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
                 if (err) {
@@ -227,6 +228,108 @@ export default {
                             return
                         }
                         console.log(response,'ressp')
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+
+        }
+    },
+
+
+    getReturnSendingFdms : (req: Request, res: Response) => {
+        try {
+            client.apexAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    consignmentClient.getReturnApexSendingFdms({ token: req.headers.token }, (err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+
+        }
+    },
+    
+    transferReturnSendingFdms : (req: Request, res: Response) => {
+        try {
+            client.apexAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    consignmentClient.transferReturnApexSendingFdm(req.body, (err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+
+        }
+    },
+
+    getReturnRecievedFdms : (req: Request, res: Response) => {
+        try {
+            client.apexAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    consignmentClient.getReturnApexRecievedFdms({ token: req.headers.token }, (err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            return
+                        }
+                        res.status(response.status).json(response)
+                    })
+                }
+            })
+        } catch (error) {
+
+        }
+    },
+
+
+    transferReturnRecievedFdms : (req: Request, res: Response) => {
+        try {
+            client.apexAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({ error: 'An internal server error occurred.' });
+                    return
+                }
+                if (response.status != 200) res.status(response.status).json(response)
+                else {
+                    consignmentClient.transferReturnApexRecievedFdm(req.body, (err: ServiceError, response: any) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).json({ error: 'An internal server error occurred.' });
+                            return
+                        }
                         res.status(response.status).json(response)
                     })
                 }
