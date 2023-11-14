@@ -28,6 +28,12 @@ service consignmentService {
     rpc updateDeliveryStatus (updateDeliveryStatusReq) returns (updateDeliveryStatusRes);
     rpc getReturnNodalSendingFdms (getNodalRecievedFdmsReq) returns (getNodalRecievedFdmsRes);
     rpc transferReturnNodalSendingFdms (transferNodalSendingFdmReq) returns (transferNodalSendingFdmRes);
+    rpc getReturnApexSendingFdms(getApexRecievedfdmsReq) returns (getApexRecievedfdmsRes);
+    rpc transferReturnApexSendingFdm (transferApexSendingFdmReq) returns (transferApexSendingFdmRes);
+    rpc getReturnNodalRecievingFdms (getNodalRecievedFdmsReq) returns (getNodalRecievedFdmsRes);
+    rpc transferReturnNodalRecievedFdm (transferNodalSendingFdmReq) returns (transferNodalSendingFdmRes);
+    rpc getReturnApexRecievedFdms (getApexRecievedfdmsReq) returns (getApexRecievedfdmsRes);
+    rpc transferReturnApexRecievedFdm (transferApexSendingFdmReq) returns (transferApexSendingFdmRes);
 }
 
 message buyAwbReq {
