@@ -14,10 +14,7 @@ apexRoute.post('/search-by-pincode',controller.searchCpByPin)
 apexRoute.get('/tracking/:awb',controller.consignmentTracking)
 apexRoute.get('/return-sending-fdms',controller.getReturnSendingFdms)
 apexRoute.post('/return-sending-fdm',controller.transferReturnSendingFdms)
-///----------------------
 apexRoute.get('/return-recieved-fdms',controller.getReturnRecievedFdms)
-
-
 apexRoute.post('/return-recieved-fdms',controller.transferReturnRecievedFdms)
 
 
