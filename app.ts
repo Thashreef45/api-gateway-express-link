@@ -19,7 +19,7 @@ class Server{
         env.config()
     }
 
-    private initializeMiddlewares(){
+    private initializeMiddlewares():void{
         this.app.use(cors())
         this.app.use(helmet())
         this.app.use(compression())
@@ -28,13 +28,13 @@ class Server{
         this.app.use(nocache())
     }
 
-    private initializeRoutes(){
+    private initializeRoutes():void{
         this.app.use('/cp',cpRoute)
         this.app.use('/nodal',nodalRoute)
         this.app.use('/apex',apexRoute)
     }
 
-    public start(port:string){
+    public start(port:string):void{
         this.app.listen(port,()=>console.log(`api-gateway is running at port:${port}`))
     }
 }
