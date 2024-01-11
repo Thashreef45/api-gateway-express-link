@@ -3,9 +3,16 @@ import client from "../../auth/config/grpc-client"
 import { ServiceError } from '@grpc/grpc-js';
 import cpClient from "../config/grpc-cp-client";
 import consignmentClient from "../../consignment/config/grpc-consignment-client";
-import { AuthRes, BookingRes, BuyAwbRes, HomeRes, SearchByPinRes, ValidateAwbRes } from "../types/interfaces";
 import { employeePhoneNumberConvert } from "../../../DAO/number-convert";
 import setData from "../../../DAO/set-timestamp";
+
+import {
+    AssignFdmRes,
+    AuthRes, BookingRes, BuyAwbRes,
+    CreateEmployeeRes, GetAnEmployeeRes, GetAssignedFdmsRes, GetBookingHistoryRes, GetConsignmentTypes, GetCpRecievedFdmsRes, GetDeliveryStatusRes, GetEmployeesRes,
+    GetTodaysBookingsRes,
+    HomeRes,SearchByPinRes, TrackingRes, ValidateAwbRes, updateDeliveryStatusRes
+} from "../types/interfaces";
 
 
 export default {
@@ -208,7 +215,7 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    cpClient.getEmployees({ token: req.headers.token }, (err: ServiceError, response: any) => {
+                    cpClient.getEmployees({ token: req.headers.token }, (err: ServiceError, response: GetEmployeesRes) => {
                         if (err) {
                             console.log(err)
                             res.status(500).json({ error: 'An internal server error occurred.' });
@@ -238,7 +245,7 @@ export default {
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
                     req.body.token = req.headers.token
-                    cpClient.createEmployee(req.body, (err: ServiceError, response: any) => {
+                    cpClient.createEmployee(req.body, (err: ServiceError, response: CreateEmployeeRes) => {
                         if (err) {
                             console.log(err)
                             res.status(500).json({ error: 'An internal server error occurred.' });
@@ -266,7 +273,7 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    consignmentClient.getConsignmentTypes({}, (err: ServiceError, response: any) => {
+                    consignmentClient.getConsignmentTypes({}, (err: ServiceError, response: GetConsignmentTypes) => {
                         if (err) {
                             res.status(500).json({ error: 'An internal server error occurred.' });
                             return
@@ -291,7 +298,7 @@ export default {
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
                     const pincode = req.params.pincode
-                    consignmentClient.getTodaysBookings({ pincode }, (err: ServiceError, response: any) => {
+                    consignmentClient.getTodaysBookings({ pincode }, (err: ServiceError, response: GetTodaysBookingsRes) => {
                         if (err) {
                             console.log(err)
                             res.status(500).json({ error: 'An internal server error occurred.' });
@@ -348,7 +355,7 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    consignmentClient.getBookingHistory(req.body, (err: ServiceError, response: any) => {
+                    consignmentClient.getBookingHistory(req.body, (err: ServiceError, response: GetBookingHistoryRes) => {
                         if (err) {
                             console.log(err)
                             res.status(500).json({ error: 'An internal server error occurred.' });
@@ -373,7 +380,7 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    consignmentClient.tracking(req.params, (err: ServiceError, response: any) => {
+                    consignmentClient.tracking(req.params, (err: ServiceError, response: TrackingRes) => {
                         if (err) {
                             console.log(err)
                             res.status(500).json({ error: 'An internal server error occurred.' });
@@ -388,7 +395,7 @@ export default {
         }
     },
 
-    getRecievedFdm : (req:Request,res:Response) => {
+    getRecievedFdm: (req: Request, res: Response) => {
         try {
             client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
                 if (err) {
@@ -398,7 +405,7 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    consignmentClient.getCpRecievedFdms({token:req.headers.token}, (err: ServiceError, response: any) => {
+                    consignmentClient.getCpRecievedFdms({ token: req.headers.token }, (err: ServiceError, response: GetCpRecievedFdmsRes) => {
                         if (err) {
                             console.log(err)
                             res.status(500).json({ error: 'An internal server error occurred.' });
@@ -409,11 +416,11 @@ export default {
                 }
             })
         } catch (error) {
-            
+
         }
     },
 
-    assignFdmToEmployee : (req:Request,res:Response) => {
+    assignFdmToEmployee: (req: Request, res: Response) => {
         try {
             client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
                 if (err) {
@@ -423,8 +430,8 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    req.body.token  = req.headers.token
-                    consignmentClient.assignFdm(req.body, (err: ServiceError, response: any) => {
+                    req.body.token = req.headers.token
+                    consignmentClient.assignFdm(req.body, (err: ServiceError, response: AssignFdmRes) => {
                         if (err) {
                             console.log(err)
                             res.status(500).json({ error: 'An internal server error occurred.' });
@@ -435,11 +442,11 @@ export default {
                 }
             })
         } catch (error) {
-            
+
         }
     },
 
-    getEmployeeAssignedFdms : (req:Request,res:Response) => {
+    getEmployeeAssignedFdms: (req: Request, res: Response) => {
         try {
             client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
                 if (err) {
@@ -449,7 +456,7 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    consignmentClient.getAssignedFdms({id:req.params.id}, (err: ServiceError, response: any) => {
+                    consignmentClient.getAssignedFdms({ id: req.params.id }, (err: ServiceError, response: GetAssignedFdmsRes) => {
                         if (err) {
                             console.log(err)
                             res.status(500).json({ error: 'An internal server error occurred.' });
@@ -460,11 +467,11 @@ export default {
                 }
             })
         } catch (error) {
-            
+
         }
     },
 
-    getDeliveryStatus : (req:Request,res:Response) => {
+    getDeliveryStatus: (req: Request, res: Response) => {
         try {
             client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
                 if (err) {
@@ -474,7 +481,7 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    consignmentClient.getDeliveryStatus({}, (err: ServiceError, response: any) => {
+                    consignmentClient.getDeliveryStatus({}, (err: ServiceError, response: GetDeliveryStatusRes) => {
                         if (err) {
                             console.log(err)
                             res.status(500).json({ error: 'An internal server error occurred.' });
@@ -485,11 +492,11 @@ export default {
                 }
             })
         } catch (error) {
-            
+
         }
     },
 
-    updateDeliveryStatus : (req:Request,res:Response) => {
+    updateDeliveryStatus: (req: Request, res: Response) => {
         try {
             client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
                 if (err) {
@@ -499,7 +506,7 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    consignmentClient.updateDeliveryStatus(req.body, (err: ServiceError, response: any) => {
+                    consignmentClient.updateDeliveryStatus(req.body, (err: ServiceError, response: updateDeliveryStatusRes) => {
                         if (err) {
                             console.log(err)
                             res.status(500).json({ error: 'An internal server error occurred.' });
@@ -510,12 +517,12 @@ export default {
                 }
             })
         } catch (error) {
-            
+
         }
     },
 
 
-    getEmployeeDetail : (req:Request,res:Response) => {
+    getEmployeeDetail: (req: Request, res: Response) => {
         try {
             client.cpAuth({ token: req.headers.token }, (err: ServiceError, response: AuthRes) => {
                 if (err) {
@@ -525,8 +532,8 @@ export default {
                 }
                 if (response.status != 200) res.status(response.status).json(response)
                 else {
-                    const data = {id:req.params.id,token:req.headers.token}
-                    cpClient.getAnEmployee(data, (err: ServiceError, response: any) => {
+                    const data = { id: req.params.id, token: req.headers.token }
+                    cpClient.getAnEmployee(data, (err: ServiceError, response: GetAnEmployeeRes) => {
                         if (err) {
                             console.log(err)
                             res.status(500).json({ error: 'An internal server error occurred.' });
@@ -537,9 +544,9 @@ export default {
                 }
             })
         } catch (error) {
-            
+
         }
-    }, 
+    },
 
 
 }
